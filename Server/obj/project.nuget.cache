@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "nx+JapETcQk=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Admin\\Personal Stuff\\AGM Project\\ChatSMS\\ChatSMS\\Server\\Server.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Admin\\.nuget\\packages\\microsoft.aspnetcore.openapi\\9.0.0\\microsoft.aspnetcore.openapi.9.0.0.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\microsoft.openapi\\1.6.17\\microsoft.openapi.1.6.17.nupkg.sha512"
+  ],
+  "logs": []
+}
