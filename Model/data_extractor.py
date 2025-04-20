@@ -1,20 +1,34 @@
 import pdfplumber
 import json
 
-def extract_text_only(pdf_path, max_images=2):
+def extract_text_only(pdf_path, is_question_paper: bool, max_images=2):
     """
     Extracts text from a PDF, skipping pages with too many images (like diagrams).
     """
     text_pages = []
 
+    at_beginning_pages = True
+
     with pdfplumber.open(pdf_path) as pdf:
         for i, page in enumerate(pdf.pages):
+
             # Skip if page has too many images (likely a diagram-heavy page)
             if len(page.images) > max_images:
                 print(f"Skipping page {i + 1} due to many images.")
                 continue
 
             text = page.extract_text()
+
+            # Skip if at beginning pages
+            if at_beginning_pages:
+                for line in text.split("\n"):
+                    # print(f"DEBUG: {line[2:6]}")
+                    if line.startswith("1 ") and line[2:6].lower() != "hour":
+                        at_beginning_pages = False
+                        break
+                if at_beginning_pages:
+                    continue
+
             print(f"Page {i + 1}: \n{text}\n\n")
             if text:
                 text_pages.append(text)
@@ -64,10 +78,10 @@ def to_json_format(question_chunks, mark_chunks):
 def main(question_pdf_path, mark_scheme_pdf_path, output_json_path):
     # Extract text from both PDFs
     print("Extracting questions...")
-    question_text = extract_text_only(question_pdf_path)
+    question_text = extract_text_only(question_pdf_path, is_question_paper=True)
 
     print("Extracting marking scheme...")
-    mark_scheme_text = extract_text_only(mark_scheme_pdf_path)
+    mark_scheme_text = extract_text_only(mark_scheme_pdf_path, is_question_paper=False)
 
     # Define keywords (tweak depending on actual PDF style)
     question_keywords = ["1", "2", "3", "Section", "Question"]
