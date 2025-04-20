@@ -75,13 +75,44 @@ def to_json_format(question_chunks, mark_chunks):
     return combined
 
 
-def clean_text(text):
+def clean_text(text: str) -> str:
     """
     It should remove unwanted lines from the text. E.g. page number, provision for students to answer, etc
     """
+    if not text:
+        return ""
+
+    cleaned_lines = []
+    for line in text.split('\n'):
+        line = line.strip()
+        if not line:
+            continue
+
+        if any([
+            "© ucles" in line.lower(),
+            "5090/21/m/j/23" in line.lower(),
+            "cambridge o level" in line.lower(),
+            "blank page" in line.lower(),
+            "turn over" in line.lower(),
+            "Fig. " in line.lower(),
+            "figure" in line.lower(),
+            ]):
+            continue
+
+        # Skip table-related instructions or table headings
+        if "Complete Table" in line.lower() or "Table " in line.lower():
+            continue
+
+        # Skip lines that are just dotted lines or mostly dots
+        if line.count(".") > len(line) * 0.3:
+            continue
+
+        cleaned_lines.append(line)
+
+    return "\n".join(cleaned_lines)
 
 
-def extract_questions(question_pdf_path: str):
+def extract_questions(question_pdf_path: str, max_images: int = 2) -> str:
     """
     Extracts text from a PDF, skipping pages with too many images (like diagrams).
 
@@ -98,16 +129,22 @@ def extract_questions(question_pdf_path: str):
         for i, page in enumerate(pdf.pages):
 
             # # Skip if page has too many images (likely a diagram-heavy page)
-            # if len(page.images) > max_images:
-            #     print(f"Skipping page {i + 1} due to many images.")
-            #     continue
+            if len(page.images) > max_images:
+               print(f"Skipping page {i + 1} due to many images.")
+               continue
 
-            text = page.extract_text()
-            text = clean_text(text)
+            text = page.extract_text(x_tolerance=1, y_tolerance=1)
+            if not text or not text.strip():
+                print(f"Page {i + 1} has no text or is whitespace only.")
+                continue
+            cleaned_text = clean_text(text)
+            if not cleaned_text.strip():
+                print(f"Page {i + 1} is empty after cleaning.")
+                continue
 
             # Skip if at beginning pages
             if at_beginning_pages:
-                for line in text.split("\n"):
+                for line in cleaned_text.split("\n"):
                     # print(f"DEBUG: {line[2:6]}")
                     if line.startswith("1 ") and line[2:6].lower() != "hour":
                         at_beginning_pages = False
@@ -116,10 +153,13 @@ def extract_questions(question_pdf_path: str):
                     continue
 
             print(f"Page {i + 1}: \n{text}\n\n")
-            if text:
-                text_pages.append(text)
+            text_pages.append(cleaned_text)
 
-    return "\n".join(text_pages)
+        final_text = "\n\n".join(text_pages)
+        with open("extracted_questions.txt", "w", encoding="utf-8") as f:
+            f.write(final_text)
+
+    return final_text
 
 
 def extract_answers(mark_scheme_pdf_path: str):
