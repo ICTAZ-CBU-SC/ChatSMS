@@ -8,10 +8,8 @@ C insulin
 D progesterone
 E oestrogen
 F glucagon.
-Complete Table 1.1 by writing the correct letters in each box. Each box can contain one or
 more letters and each letter can be used more than once. The first one has been done for
 you.
-Table 1.1
 hormones
 produced in the pancreas C and F
 produced in the pituitary gland
@@ -25,7 +23,6 @@ released to build up the uterus lining after menstruation
 2 Meerkats are small mammals that live in deserts which are dry and open habitats.
 Deserts are very hot during the day but cold at night.
 Meerkats are carnivores which search for food during the daytime.
-(a) Fig. 2.1 shows part of a food web from a desert.
 eagle
 beetle
 meerkat
@@ -33,10 +30,7 @@ animal dung
 large snake
 scorpion
 not to scale
-Fig. 2.1
 (i) Using the visible characteristics of the organisms in the food web, complete the gaps in
-Table 2.1 to classify the named organisms.
-Table 2.1
 organism vertebrate or arthropod group visible classification feature
 scorpion
 meerkat mammal
@@ -55,14 +49,12 @@ Suggest three ways in which these burrows help the meerkats to survive.
 [Total: 15]
 
 6
-3 Fig. 3.1 shows a young tomato plant growing near a window.
 Cells from two positions in the stem are also shown.
 position X
 cell from position X
 position Y
 light
 cell from position Y
-Fig. 3.1
 The cells at X divide constantly. They then increase in size and some form mature cells like the
 one shown from position Y.
 (a) Cells at positions X and Y differ in size and shape.
@@ -83,7 +75,6 @@ State how many chromosomes a cell from position Y will contain and explain your 
 BLANK PAGE
 
 9
-4 Fig. 4.1 shows a label from a snack bar.
 Nutrition Facts
 One bar: 70 g
 mass percentage of recommended
@@ -97,7 +88,6 @@ protein 30 56%
 7
 vitamin C 0%
 iron 30%
-Fig. 4.1
 (a) (i) Explain how the nutrition provided by the snack bar is suitable for a person training for a
 sporting event.
 (ii) Calculate how many grams of dietary fibre are required in the diet to obtain 100% of the
@@ -108,15 +98,10 @@ recommended daily value.
 10
 5 Myopia is an eye condition. If a person has myopia, near objects can be seen clearly but not those
 that are far away.
-It can happen when the eyeballs grow slightly too long as shown in Fig. 5.1.
 light from far-away object
-Fig. 5.1
 (a) (i) Explain how parts of the eye are involved in producing a clear image of a near object.
 (ii) Suggest why individuals with long eyeballs cannot see far-away objects clearly.
-You may draw on the diagram of the eye in Fig. 5.1.
 (b) A country carried out two national health surveys separated by approximately 30 years.
-Table 5.1 shows the information that was obtained about myopia.
-Table 5.1
 percentage of people with myopia
 males females
 age 1971–72 1999–2004 1971–72 1999–2004
@@ -150,10 +135,8 @@ antibiotic-resistant bacteria.
 
 13
 7 The carbon cycle is fundamental to all ecosystems.
-Carbon is continuously cycled between living organisms and the atmosphere, as shown in Fig. 7.1.
 atmosphere
 living organisms
-Fig. 7.1
 (a) Describe how carbon is cycled between living organisms and the atmosphere.
 (b) Woodland ecosystems are often managed by humans.
 If trees in a woodland are chopped down, they can then be:
