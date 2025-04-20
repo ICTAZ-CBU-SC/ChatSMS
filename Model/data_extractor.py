@@ -75,6 +75,58 @@ def to_json_format(question_chunks, mark_chunks):
     return combined
 
 
+def clean_text(text):
+    """
+    It should remove unwanted lines from the text. E.g. page number, provision for students to answer, etc
+    """
+
+
+def extract_questions(question_pdf_path: str):
+    """
+    Extracts text from a PDF, skipping pages with too many images (like diagrams).
+
+    {
+        "Section A Q1": "Explain photosynthesis",
+        2: "..."
+    }
+    """
+    text_pages = []
+
+    at_beginning_pages = True
+
+    with pdfplumber.open(question_pdf_path) as pdf:
+        for i, page in enumerate(pdf.pages):
+
+            # # Skip if page has too many images (likely a diagram-heavy page)
+            # if len(page.images) > max_images:
+            #     print(f"Skipping page {i + 1} due to many images.")
+            #     continue
+
+            text = page.extract_text()
+            text = clean_text(text)
+
+            # Skip if at beginning pages
+            if at_beginning_pages:
+                for line in text.split("\n"):
+                    # print(f"DEBUG: {line[2:6]}")
+                    if line.startswith("1 ") and line[2:6].lower() != "hour":
+                        at_beginning_pages = False
+                        break
+                if at_beginning_pages:
+                    continue
+
+            print(f"Page {i + 1}: \n{text}\n\n")
+            if text:
+                text_pages.append(text)
+
+    return "\n".join(text_pages)
+
+
+def extract_answers(mark_scheme_pdf_path: str):
+    raise NotImplementedError
+
+
+
 def main(question_pdf_path, mark_scheme_pdf_path, output_json_path):
     # Extract text from both PDFs
     print("Extracting questions...")
@@ -109,6 +161,8 @@ def main(question_pdf_path, mark_scheme_pdf_path, output_json_path):
 if __name__ == "__main__":
     question_pdf = "671731-june-2023-question-paper-21.pdf"         # Replace with your file
     mark_scheme_pdf = "671727-june-2023-mark-scheme-paper-21.pdf"      # Replace with your file
-    output_file = "cambridge_output.json"
 
-    main(question_pdf, mark_scheme_pdf, output_file)
+    extract_questions(question_pdf)
+
+    # output_file = "cambridge_output.json"
+    # main(question_pdf, mark_scheme_pdf, output_file)
