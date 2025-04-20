@@ -1,25 +1,31 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Admin\\Personal Stuff\\AGM Project\\ChatSMS\\ChatSMS\\Server\\Server.csproj": {}
+    "D:\\projects\\IctazAGM\\ChatSMS\\Server\\Server.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Admin\\Personal Stuff\\AGM Project\\ChatSMS\\ChatSMS\\Server\\Server.csproj": {
+    "D:\\projects\\IctazAGM\\ChatSMS\\Server\\Server.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Admin\\Personal Stuff\\AGM Project\\ChatSMS\\ChatSMS\\Server\\Server.csproj",
+        "projectUniqueName": "D:\\projects\\IctazAGM\\ChatSMS\\Server\\Server.csproj",
         "projectName": "Server",
-        "projectPath": "C:\\Users\\Admin\\Personal Stuff\\AGM Project\\ChatSMS\\ChatSMS\\Server\\Server.csproj",
-        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Admin\\Personal Stuff\\AGM Project\\ChatSMS\\ChatSMS\\Server\\obj\\",
+        "projectPath": "D:\\projects\\IctazAGM\\ChatSMS\\Server\\Server.csproj",
+        "packagesPath": "C:\\Users\\jsiba\\.nuget\\packages\\",
+        "outputPath": "D:\\projects\\IctazAGM\\ChatSMS\\Server\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\jsiba\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -36,8 +42,9 @@
         "restoreAuditProperties": {
           "enableAudit": "true",
           "auditLevel": "low",
-          "auditMode": "all"
-        }
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.200"
       },
       "frameworks": {
         "net9.0": {
@@ -79,7 +86,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Users\\Admin\\.dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.203/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
