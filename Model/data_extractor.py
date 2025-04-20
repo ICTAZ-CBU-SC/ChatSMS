@@ -89,14 +89,14 @@ def clean_text(text: str) -> str:
             continue
 
         if any([
-            "© ucles" in line.lower(),
+            "© UCLES" in line.lower(),
             "5090/21/m/j/23" in line.lower(),
             "cambridge o level" in line.lower(),
-            "blank page" in line.lower(),
+            "BLANK PAGE" in line.lower(),
             "turn over" in line.lower(),
             "Fig. " in line.lower(),
             "figure" in line.lower(),
-            ".." in line.lower()
+            "...." in line.lower(),
             ]):
             continue
 
