@@ -96,6 +96,7 @@ def clean_text(text: str) -> str:
             "turn over" in line.lower(),
             "Fig. " in line.lower(),
             "figure" in line.lower(),
+            ".." in line.lower()
             ]):
             continue
 
