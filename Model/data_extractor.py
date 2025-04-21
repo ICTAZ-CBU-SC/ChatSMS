@@ -146,8 +146,9 @@ def extract_answers(mark_scheme_pdf_path: str):
     groups = extract_all_groups(document_lines)
     for group in groups:
         print("------------------------------------------------------")
-        for line in group:
-            print(line)
+        print(process_answer_lines(group))
+        # for line in group:
+        #     print(line)
 
     # for line in document_lines:
     #     print(line)
@@ -155,8 +156,26 @@ def extract_answers(mark_scheme_pdf_path: str):
     return "\n".join(text_pages)
 
 
-def process_question_lines(lines: list[str]):
+def process_answer_lines(lines: list[str]):
+    if len(lines) == 0:
+        return None
+
+    lines = lines.copy()
     question_id = lines[0].split(" ")[0]
+    lines[0] = lines[0][len(question_id):].strip()
+
+    cleaned_lines = []
+    for i in range(len(lines)):
+        line_split = lines[i].split()[:-1]
+        if ";" in line_split:
+            line_split = line_split[:line_split.index(";")]
+        lines[i] = " ".join(line_split)
+
+        if not (lines[i].lower().startswith("any") and "from" in lines[i].lower()):
+            cleaned_lines.append(lines[i])
+
+    answer_text = ". ".join(cleaned_lines)
+    return {question_id: answer_text}
 
 
 def extract_all_groups(lines: list[str]) -> list[list[str]]:
