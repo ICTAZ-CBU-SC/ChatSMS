@@ -138,30 +138,33 @@ def extract_answers(mark_scheme_pdf_path: str):
                 if at_beginning_pages:
                     continue
 
-            # print(f"Page {page_index + 1}  ---------------------------------------------------: \n{'\n'.join(document_lines)}\n\n")
-
             for line in page_lines:
                 line = process_marking_scheme_line(line)
                 if line:
                     document_lines.append(line)
 
-    # # grouped = extract_nested_groups(document_lines)
-    for line in document_lines:
-        print(line)
-        # if group:
-        #     print(f"-------------------\n{group}\n")
-        #     # print(f"-------------------\n{[print(l) for l in group]}\n-----------------------")
+    groups = extract_all_groups(document_lines)
+    for group in groups:
+        print("------------------------------------------------------")
+        for line in group:
+            print(line)
+
+    # for line in document_lines:
+    #     print(line)
 
     return "\n".join(text_pages)
 
 
-def extract_nested_groups(lines: list[str]) -> list[list[str]]:
-    """
-    Extracts groups of lines that start with a sequence like 1(a) or 3(b)(ii),
-    and end before the next line with the same pattern.
+def process_question_lines(lines: list[str]):
+    question_id = lines[0].split(" ")[0]
 
-    Returns:
-        List of groups, each group being a list of lines.
+
+def extract_all_groups(lines: list[str]) -> list[list[str]]:
+    """
+    Splits the input lines into groups where each group starts with a line
+    that begins with a numeric+parentheses pattern (e.g., 1(a), 2(b)(ii), etc.).
+
+    Each group includes all lines up until the next match.
     """
     pattern = re.compile(r"^\d+(\([a-zA-Z]+\))+")
     groups = []
@@ -171,12 +174,14 @@ def extract_nested_groups(lines: list[str]) -> list[list[str]]:
         if pattern.match(line):
             if current_group:
                 groups.append(current_group)
-                current_group = []
-            current_group.append(line)
-        elif current_group:
-            current_group.append(line)
+            current_group = [line]
+        else:
+            if current_group:
+                current_group.append(line)
+            else:
+                # If content exists before any matching pattern, treat it as its own group
+                current_group = [line]
 
-    # Add the last group if still open
     if current_group:
         groups.append(current_group)
 
@@ -198,9 +203,8 @@ def process_marking_scheme_line(line: str):
         line.startswith("PUBLISHED"),
         line.startswith("Question Answer Marks Guidance"),
         line.startswith("©"),
-
+        line.startswith("Max")
     ]):
-        # print(f"deleting: '{line}'")
         return ""
 
     return line
