@@ -2,7 +2,6 @@ import pdfplumber
 import json
 import re
 
-
 def extract_text_only(pdf_path, is_question_paper: bool, max_images=2):
     """
     Extracts text from a PDF, skipping pages with too many images (like diagrams).
@@ -79,42 +78,101 @@ def to_json_format(question_chunks, mark_chunks):
 
 def clean_text(text):
     """
-    It should remove unwanted lines from the text. E.g. page number, provision for students to answer, etc
+    Removes unwanted lines from the text. E.g. page number, provision for students to answer, etc
     """
+    if not text:
+        return ""
+
+    cleaned_lines = []
+    for line in text.split('\n'):
+        line = line.strip()
+        if not line:
+            continue
+
+        # Skip lines containing specific patterns
+        if any([
+            "© UCLES" in line,
+            "5090/21/m/j/23" in line,
+            "cambridge o level" in line.lower(),
+            "BLANK PAGE" in line.upper(),
+            "turn over" in line.lower(),
+            "Fig. " in line,
+            "figure" in line.lower(),
+        ]): 
+            continue
+
+        if re.search(r"\[\s*total\s*:\s*\d+\s*\]", line, re.IGNORECASE):
+            continue
+        if re.search(r"\[\s*\d+\s*\]", line, re.IGNORECASE):
+            continue
+        if re.search(r"\s*\d+\s*", line, re.IGNORECASE):
+            continue
+
+        # Skip table-related instructions or table headings
+        if "Complete Table" in line or "Table " in line:
+            continue
+
+        # Skip lines that are dotted lines or mostly dots
+        if "...." in line or line.count(".") > len(line) * 0.3:
+            continue
+
+        # Remove answer lines (dots)
+        line = re.sub(r'\.{3,}', '', line)
+
+        # If after removing dots the line is empty, skip it
+        if not line.strip():
+            continue
+
+        cleaned_lines.append(line)
+
+    return "\n".join(cleaned_lines)
 
 
-def extract_questions(question_pdf_path: str) -> dict[str: str]:
+def extract_questions(question_pdf_path: str, max_images: int = 2) -> str:
     """
     Extracts text from a PDF, skipping pages with too many images (like diagrams).
-
-    {
-        "Section A Q1": "Explain photosynthesis",
-        2: "..."
-    }
     """
     text_pages = []
-    document_lines = []
-
     at_beginning_pages = True
     with pdfplumber.open(question_pdf_path) as pdf:
-        for page_index, page in enumerate(pdf.pages):
-            text = page.extract_text()
+        for i, page in enumerate(pdf.pages):
+            # Skip if page has too many images (likely a diagram-heavy page)
+            if len(page.images) > max_images:
+                print(f"Skipping page {i + 1} due to many images.")
+                continue
 
-            # Skip if at beginning pages
+            # Extract text with tighter tolerances to preserve formatting
+            text = page.extract_text(x_tolerance=1, y_tolerance=1)
+            if not text or not text.strip():
+                print(f"Page {i + 1} has no text or is whitespace only.")
+                continue
+
+            # Process for beginning pages
             if at_beginning_pages:
+                found_question_start = False
                 for line in text.split("\n"):
-                    # print(f"DEBUG: {line[2:6]}")
                     if line.startswith("1 ") and line[2:6].lower() != "hour":
                         at_beginning_pages = False
+                        found_question_start = True
                         break
-                if at_beginning_pages:
+                if at_beginning_pages and not found_question_start:
+                    print(f"Skipping beginning page {i + 1}")
                     continue
 
-            print(f"Page {page_index + 1}: \n{text}\n\n")
-            if text:
-                text_pages.append(text)
+            # Apply cleaning function
+            cleaned_text = clean_text(text)
+            if not cleaned_text.strip():
+                print(f"Page {i + 1} is empty after cleaning.")
+                continue
 
-    return "\n".join(text_pages)
+            print(f"Cleaned page {i + 1}: \n{cleaned_text}\n\n")
+            text_pages.append(cleaned_text)
+
+    final_text = "\n\n".join(text_pages)
+    with open("extracted_questions.txt", "w", encoding="utf-8") as f:
+        f.write(final_text)
+
+    return final_text
 
 
 def extract_answers(mark_scheme_pdf_path: str):
