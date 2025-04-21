@@ -38,8 +38,10 @@ def extract_answers(mark_scheme_pdf_path: str):
 
     # for line in document_lines:
     #     print(line)
-
-    return [group for group in groups]
+    final = {}
+    for group in groups:
+        final.update(process_answer_lines(group))
+    return final
 
 
 def process_answer_lines(lines: list[str]):
@@ -122,4 +124,4 @@ if __name__ == "__main__":
     # extract_questions(question_pdf)
     answers = extract_answers(mark_scheme_pdf)
 
-    [print(a) for a in answers]
+    [print(f"{k}:\t{v}") for k, v in answers.items()]
