@@ -1,10 +1,59 @@
-class Dataset:
-    class DatasetEntry:
-        def __init__(self):
-            pass
+from datasets import load_dataset
 
-    def __init__(self):
-        self._data = []
+"""
+CSV Format
+---------------------------------------------------------------------------
+   id  |   Question                        |  Answer
+---------------------------------------------------------------------------
+   1   |                                    |   
+   2   |                                    |   
+   3   |                                    |   
+---------------------------------------------------------------------------
+
+"""
+
+
+csv_file_path = "dataset.csv"
+dataset = load_dataset("csv", data_files=csv_file_path, delimiter=",")
+
+
+def convert_format(dataset_entry: dict):
+    formatted_text = f"<human>: {dataset_entry['Question']}\n<bot>: {dataset_entry['Answer']}\n"
+    return {"text": formatted_text}
+
+
+# Apply function to convert dataset
+dataset.map(convert_format)
+
+
+# Remove other columns and keep only "text"
+# Perform this operation on each split separately
+for split in dataset.keys():
+    columns_to_remove = [col for col in dataset[split].column_names if col != "text"]
+    dataset[split] = dataset[split].map(lambda entry: {"text": entry["text"]},
+                                        remove_columns=columns_to_remove)
+
+
+# Function to extract human text
+def extract_human_text(full_text: str):
+    start_index = full_text.find("<human>:") + len("<human>:")
+    end_index = full_text.find("<bot>:")
+    return full_text[start_index:end_index].strip()
+
+
+# Function to extract bot text
+def extract_bot_text(full_text: str):
+    start_index = full_text.find("<bot>:") + len("<bot>:")
+    return full_text[start_index:].strip()
+
+
+print(dataset["train"][5])
+print(extract_human_text(dataset["train"][5]["text"]))
+print(extract_bot_text(dataset["train"][5]["text"]))
+
+
+
+
 
 
 features = ['conversations', 'source', 'score', 'text']
