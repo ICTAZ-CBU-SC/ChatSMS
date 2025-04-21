@@ -1,12 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Server.Models;
+using Server.Services;
+
 //using Server.Services;
 
 namespace Server.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class SmsRequestController(ILogger<SmsRequestController> logger) : ControllerBase
+    public class SmsRequestController(ILogger<SmsRequestController> logger, LlamaService llamaService) : ControllerBase
     {
         [HttpPost]
         public IActionResult SendSms([FromBody] SmsMessage smsMessage)
@@ -19,30 +21,26 @@ namespace Server.Controllers
 
             return Ok(new { Status = "Success", Message = "SMS sent successfully." });
         }
-        
+
         [HttpPost("receive")]
-        public async Task<IActionResult> ReceiveSms([FromBody] SmsMessage smsMessage)
+        public async Task<IActionResult> ProcessPrompt([FromBody] SmsMessage request)
         {
-            logger.LogInformation($"Received SMS from {smsMessage.PhoneNumber}: {smsMessage.Message}");
+            logger.LogInformation($"Received prompt: {request.Message}"); 
 
             try
             {
-                // Process the message through LLM
-                
-                // Update the session with the new message and response
-               
-                // Send the response back via SMS
-                
-                return Ok(new { 
-                    success = true, 
-                    message = "SMS processed successfully",
-                    //response = llmResponse.Response
+                var response = await llamaService.GetCompletionAsync(request.Message);
+
+                return Ok(new
+                {
+                    success = true,
+                    response
                 });
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, "Error processing SMS");
-                return StatusCode(500, new { success = false, message = "Error processing SMS" });
+                logger.LogError(ex, "Error processing prompt");
+                return StatusCode(500, new { success = false, message = "Error processing prompt" });
             }
         }
     }

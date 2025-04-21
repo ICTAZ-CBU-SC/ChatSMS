@@ -1,15 +1,20 @@
 ﻿using LLama;
 using LLama.Common;
+using LLama.Sampling;
 using Microsoft.Extensions.Options;
 using Server.Models;
 
 namespace Server.Services;
 using System.Collections.Generic;
 
-public class LlamaService
+public class LlamaService : IDisposable
 {
+    private readonly LLamaWeights _model;
+    private readonly LLamaContext _context;
+    private readonly InteractiveExecutor _executor;
     private readonly ChatSession _chatSession;
     private readonly List<ChatHistory.Message> _conversationHistory = new();
+    private bool _disposed = false;
 
     public LlamaService(IOptions<Llamma> settings)
     {
@@ -19,28 +24,50 @@ public class LlamaService
             GpuLayerCount = settings.Value.GpuLayerCount
         };
 
-        var model = LLamaWeights.LoadFromFile(parameters);
-        var context = model.CreateContext(parameters);
-        var executor = new InteractiveExecutor(context);
-
-        _chatSession = new ChatSession(executor);
+        _model = LLamaWeights.LoadFromFile(parameters);
+        _context = _model.CreateContext(parameters);
+        _executor = new InteractiveExecutor(_context);
+        _chatSession = new ChatSession(_executor);
     }
 
     public async Task<string> GetCompletionAsync(string prompt)
     {
-        if (_conversationHistory.LastOrDefault()?.AuthorRole == AuthorRole.User)
+        var inferenceParams = new InferenceParams()
         {
-            _conversationHistory.Add(new ChatHistory.Message(AuthorRole.Assistant, "Acknowledged."));
-        }
+            MaxTokens = 256,
+            AntiPrompts = new List<string> { "User:" },
+            SamplingPipeline = new DefaultSamplingPipeline(),
+        };
 
-        var userMessage = new ChatHistory.Message(AuthorRole.User, prompt);
-        _conversationHistory.Add(userMessage);
-
-        await foreach (var response in _chatSession.ChatAsync(userMessage))
+        var result = new System.Text.StringBuilder();
+        await foreach (var text in _chatSession.ChatAsync(new ChatHistory.Message(AuthorRole.User, prompt), inferenceParams))
         {
-            _conversationHistory.Add(new ChatHistory.Message(AuthorRole.Assistant, response));
-            return response; 
+            result.Append(text);
         }
-        return string.Empty; 
+        
+        return result.ToString();
+    }
+
+    public void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+
+    protected virtual void Dispose(bool disposing)
+    {
+        if (!_disposed)
+        {
+            if (disposing)
+            {
+                _context?.Dispose();
+                _model?.Dispose();
+            }
+            _disposed = true;
+        }
+    }
+    ~LlamaService()
+    {
+        Dispose(false);
     }
 }
