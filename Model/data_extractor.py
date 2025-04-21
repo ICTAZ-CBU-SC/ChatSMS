@@ -98,7 +98,14 @@ def clean_text(text: str) -> str:
             "turn over" in line.lower(),
             "Fig. " in line,
             "figure" in line.lower(),
-        ]):
+        ]): 
+            continue
+
+        if re.search(r"\[\s*total\s*:\s*\d+\s*\]", line, re.IGNORECASE):
+            continue
+        if re.search(r"\[\s*\d+\s*\]", line, re.IGNORECASE):
+            continue
+        if re.search(r"\s*\d+\s*", line, re.IGNORECASE):
             continue
 
         # Skip table-related instructions or table headings

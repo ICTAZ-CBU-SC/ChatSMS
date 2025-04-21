@@ -1,5 +1,3 @@
-3
-1 The human body produces over fifty different hormones.
 (a) Describe what is meant by the term hormone.
 (b) The list shows some of the hormones produced by the human body:
 A adrenaline
@@ -16,11 +14,7 @@ produced in the pituitary gland
 produced in the ovary
 released to increase blood sugar concentration
 released to build up the uterus lining after menstruation
-[4]
-[Total: 7]
 
-4
-2 Meerkats are small mammals that live in deserts which are dry and open habitats.
 Deserts are very hot during the day but cold at night.
 Meerkats are carnivores which search for food during the daytime.
 eagle
@@ -36,19 +30,12 @@ scorpion
 meerkat mammal
 snake
 eagle vertebrate bird has feathers
-[6]
 
-5
 (ii) Suggest and explain what might happen to the populations of snakes and beetles in the
 food web if the number of meerkats went down.
 (iii) Suggest and explain why deserts usually have low biodiversity.
-(b) Meerkats are social animals living in groups of about 10 –15 individuals. When they are not
-out in the open, they spend time in networks of burrows, which can be as deep as 1.5 m.
 Suggest three ways in which these burrows help the meerkats to survive.
-[3]
-[Total: 15]
 
-6
 Cells from two positions in the stem are also shown.
 position X
 cell from position X
@@ -59,56 +46,28 @@ The cells at X divide constantly. They then increase in size and some form matur
 one shown from position Y.
 (a) Cells at positions X and Y differ in size and shape.
 Give two other differences between these cells.
-[2]
 (b) Explain how the movement of water molecules is involved in this increase in cell size.
 
-7
 (c) The tomato plant is responding to the light.
 Name this response and explain how auxin and cell elongation are involved.
-[5]
-(d) The diploid number of chromosomes in a tomato plant cell is 24.
 State how many chromosomes a cell from position Y will contain and explain your answer.
-[2]
-[Total: 12]
 
-8
-
-9
 Nutrition Facts
-One bar: 70 g
 mass percentage of recommended
 in g daily value
-fat 7 11%
-dietary fibre 3 12%
-sugars 10 –
 g
-0
-protein 30 56%
-7
-vitamin C 0%
-iron 30%
 (a) (i) Explain how the nutrition provided by the snack bar is suitable for a person training for a
 sporting event.
-(ii) Calculate how many grams of dietary fibre are required in the diet to obtain 100% of the
 recommended daily value.
 (b) Describe what happens to protein in the digestive system.
-[Total: 11]
 
-10
-5 Myopia is an eye condition. If a person has myopia, near objects can be seen clearly but not those
 that are far away.
 light from far-away object
 (a) (i) Explain how parts of the eye are involved in producing a clear image of a near object.
 (ii) Suggest why individuals with long eyeballs cannot see far-away objects clearly.
-(b) A country carried out two national health surveys separated by approximately 30 years.
 percentage of people with myopia
 males females
-age 1971–72 1999–2004 1971–72 1999–2004
-12–17 21.7 30.9 26.4 37.0
-18–24 22.5 29.7 32.5 46.4
-25–34 20.2 38.9 27.8 49.1
 
-11
 (i) Comment on how the percentage of people with myopia has changed in this population.
 (ii) It is thought that myopia is the result of a combination of genetic and environmental
 factors.
@@ -119,10 +78,7 @@ see far-away objects clearly.
 (c) Iris colour is genetically determined. The allele for blue colour, b, is recessive to the allele for
 brown colour, B.
 Explain why it is not possible to have a heterozygous blue-eyed person.
-[Total: 13]
 
-12
-6 (a) The human heart pumps blood which circulates around the body in blood vessels.
 (i) Name the chamber of the heart with the thickest wall.
 (ii) State what causes the sound of the heartbeat.
 (iii) Name the blood vessel that carries blood from the aorta to the liver.
@@ -130,27 +86,15 @@ Explain why it is not possible to have a heterozygous blue-eyed person.
 (b) Explain the difference between antibodies and antibiotics.
 (c) Describe how the process of natural selection has led to the development of strains of
 antibiotic-resistant bacteria.
-[Total: 12]
 
-13
-7 The carbon cycle is fundamental to all ecosystems.
 atmosphere
 living organisms
 (a) Describe how carbon is cycled between living organisms and the atmosphere.
 (b) Woodland ecosystems are often managed by humans.
 If trees in a woodland are chopped down, they can then be:
-1. burned
-2. removed and made into objects
-3. left in the ecosystem.
 Compare the effects of these three different forms of management on the woodland
 ecosystem itself and more widely on the planet.
-[Total:10]
 
-14
-
-15
-
-16
 Permission to reproduce items where third-party owned material protected by copyright is included has been sought and cleared where possible. Every
 reasonable effort has been made by the publisher (UCLES) to trace copyright holders, but if any items requiring clearance have unwittingly been included, the
 publisher will be pleased to make amends at the earliest possible opportunity.
